@@ -5,19 +5,16 @@
   
   <title>精通JavaScript的this关键字 | Xudong Ke&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。
-我们和在英语、法语这样的自然语言中使用名词一样地使用this。比如，“John飞快地跑着，因为他想追上火车”。请注意这句话中的代指John的代名词“他”。我们原本也可以这样表达，“John飞快地跑着，因为John想追">
+  <meta name="description" content="前言JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="精通JavaScript的this关键字">
 <meta property="og:url" content="http://yoursite.com/2016/05/04/anki-excel-shortcuts/index.html">
 <meta property="og:site_name" content="Xudong Ke's blog">
-<meta property="og:description" content="前言JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。
-我们和在英语、法语这样的自然语言中使用名词一样地使用this。比如，“John飞快地跑着，因为他想追上火车”。请注意这句话中的代指John的代名词“他”。我们原本也可以这样表达，“John飞快地跑着，因为John想追">
-<meta property="og:updated_time" content="2016-05-04T07:14:36.000Z">
+<meta property="og:description" content="前言JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。">
+<meta property="og:updated_time" content="2016-05-05T02:45:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="精通JavaScript的this关键字">
-<meta name="twitter:description" content="前言JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。
-我们和在英语、法语这样的自然语言中使用名词一样地使用this。比如，“John飞快地跑着，因为他想追上火车”。请注意这句话中的代指John的代名词“他”。我们原本也可以这样表达，“John飞快地跑着，因为John想追">
+<meta name="twitter:description" content="前言JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。">
   
     <link rel="alternative" href="/atom.xml" title="Xudong Ke&#39;s blog" type="application/atom+xml">
   
@@ -277,7 +274,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JS中的this关键字让很多新老JS开发人员都感到困惑。这篇文章将对this关键字进行完整地阐述。读完本文以后，您的困惑将全部消除。您将学会如何在各种不同的情形正确运用this。<br><a id="more"></a></p>
 <p>我们和在英语、法语这样的自然语言中使用名词一样地使用this。比如，“John飞快地跑着，因为他想追上火车”。请注意这句话中的代指John的代名词“他”。我们原本也可以这样表达，“John飞快地跑着，因为John想追上火车”。按照正常的语言习惯，我们并不按第二种方式表达。如果我们真按第二种方式说话，我们的家人和基友一定会把我们当成怪胎。说不定不止家人，甚至连我们的酒肉朋友和同事都会远离我们。类似地，在JS中，我们把this关键字当成一种快捷方式，或者说是引用（referent）。this关键字指向的是当前上下文（context，下文中将会对此作专门的解释）的主体（subject），或者当前正在被执行的代码块的主体。</p>
 <p>考虑以下代码，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var person = &#123;</span><br><span class="line">	firstName: &quot;Penelope&quot;,</span><br><span class="line">	lastName: &quot;Barrymore&quot;,</span><br><span class="line">	fullName: function () &#123;</span><br><span class="line">      // 正如我们在文中提到的使用“他”作为代名词一样，我们在这里使用this</span><br><span class="line"></span><br><span class="line">      console.log(this.firstName + &quot; &quot; + this.lastName);</span><br><span class="line">      //我们其实也可以这样写：</span><br><span class="line">      console.log(person.firstName + &quot; &quot; + person.lastName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -401,7 +398,7 @@
         <p><span>本文标题:</span><a href="/2016/05/04/anki-excel-shortcuts/">精通JavaScript的this关键字</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Xudong Ke</a></p>
         <p><span>发布时间:</span>2016-05-04, 15:02:47</p>
-        <p><span>最后更新:</span>2016-05-04, 15:14:36</p>
+        <p><span>最后更新:</span>2016-05-05, 10:45:46</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/05/04/anki-excel-shortcuts/" title="精通JavaScript的this关键字">http://yoursite.com/2016/05/04/anki-excel-shortcuts/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/05/04/anki-excel-shortcuts/　　作者: Xudong Ke" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
